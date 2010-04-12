@@ -10,8 +10,6 @@ from django.conf import settings
 from basic.blog.models import *
 from tagging.models import Tag, TaggedItem
 
-locale.setlocale(locale.LC_ALL, settings.LANGUAGE_CODE)
-
 def post_list(request, page=0, paginate_by=20, **kwargs):
     page_size = getattr(settings,'BLOG_PAGESIZE', paginate_by)
     return list_detail.object_list(

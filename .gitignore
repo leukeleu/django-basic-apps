@@ -1,3 +1,4 @@
 *.pyc
 *.db
 *.txt
+django_basic_apps.egg-info/PKG-INFO

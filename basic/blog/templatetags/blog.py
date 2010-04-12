@@ -147,27 +147,3 @@ class LatestMonths(template.Node):
     def render(self, context):
         context[self.var_name] = Post.objects.dates("publish", "month")[:int(self.limit)]
         return ''
-
-@register.tag
-def get_latest_months(parser, token):
-    """
-    Gets the latest months and stores them in a variable
-
-    Syntax::
-
-        {% get_latest_months [limit] as [var_name] %}
-
-    Example usage::
-
-        {% get_latest_months 10 as latest_months %}
-    
-    """
-    try:
-        tag_name, arg = token.contents.split(None, 1)
-    except ValueError:
-        raise template.TemplateSyntaxError, "%s tag requires arguments" % token.contents.split()[0]
-    m = re.search(r'(.*?) as (\w+)', arg)
-    if not m:
-        raise template.TemplateSyntaxError, "%s tag had invalid arguments" % tag_name
-    format_string, var_name = m.groups()
-    return LatestMonths(format_string, var_name)

@@ -10,7 +10,6 @@ import datetime
 import tagging
 from tagging.fields import TagField
 
-
 class Category(models.Model):
     """Category model."""
     title = models.CharField(_('title'), max_length=100)
