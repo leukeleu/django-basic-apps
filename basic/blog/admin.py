@@ -19,3 +19,5 @@ class BlogRollAdmin(admin.ModelAdmin):
     list_display = ('name', 'url', 'sort_order',)
     list_editable = ('sort_order',)
 admin.site.register(BlogRoll)
+
+admin.site.register(Image)

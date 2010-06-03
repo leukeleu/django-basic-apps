@@ -97,3 +97,13 @@ class BlogRoll(models.Model):
 
     def get_absolute_url(self):
         return self.url
+
+class Image(models.Model):
+    """Upload images as inline type"""
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='images')
+
+    def __unicode__(self):
+        return self.name
+
+    
