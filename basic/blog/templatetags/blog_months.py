@@ -36,7 +36,7 @@ class LatestMonths(template.Node):
         self.var_name = var_name
     
     def render(self, context):
-        context[self.var_name] = Post.objects.dates("publish", "month").order_by('-publish')[:int(self.limit)]
+        context[self.var_name] = Post.objects.dates("publish", "month", order="DESC")[:int(self.limit)]
         return ''
 
 @register.filter
