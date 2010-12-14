@@ -7,8 +7,7 @@ from django.conf import settings
 from basic.blog.managers import PublicManager
 
 import datetime
-import tagging
-from tagging.fields import TagField
+from taggit.managers import TaggableManager
 
 class Category(models.Model):
     """Category model."""
@@ -46,7 +45,7 @@ class Post(models.Model):
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
     categories = models.ManyToManyField(Category, blank=True)
-    tags = TagField(editable=getattr(settings, 'BLOG_ALLOW_TAGS', False))
+    tags = TaggableManager(blank=True)
     objects = PublicManager()
 
     class Meta:
@@ -106,4 +105,4 @@ class Image(models.Model):
     def __unicode__(self):
         return self.name
 
-    
+
