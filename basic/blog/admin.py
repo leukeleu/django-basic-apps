@@ -7,6 +7,12 @@ if blog_settings.EDITOR == 'markitup':
     from markitup.widgets import AdminMarkItUpWidget
 elif blog_settings.EDITOR == 'wmdeditor':
     from admin_wmdeditor import WmdEditorModelAdmin as EditorAdmin
+elif blog_settings.EDITOR == 'wymeditor':
+    from django.contrib.admin import ModelAdmin as EditorAdmin
+    from wymeditor.widgets import AdminWYMEditorArea
+elif blog_settings.EDITOR == 'tinymce':
+    from django.contrib.admin import ModelAdmin as EditorAdmin
+    from tinymce.widgets import TinyMCE
 
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
@@ -27,6 +33,13 @@ class PostAdmin(EditorAdmin):
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name in ['body', 'tease'] and blog_settings.EDITOR == 'markitup':
             kwargs['widget'] = AdminMarkItUpWidget()
+
+        if db_field.name in ['body', 'tease'] and blog_settings.EDITOR == 'wymeditor':
+            kwargs['widget'] = AdminWYMEditorArea
+
+        if db_field.name in ['body', 'tease'] and blog_settings.EDITOR == 'tinymce':
+            kwargs['widget'] = TinyMCE(attrs={'cols': 80, 'rows': 20})
+
         return super(PostAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 admin.site.register(Post, PostAdmin)
 
